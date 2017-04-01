@@ -37,22 +37,7 @@ function startGame(){
 	board = canvas.getContext("2d");
 
 	initBoard(play_field, flip, tile); //Initialization of the board
-	/*
-	for (i = 0; i < x; i++){
-		for (j = 0; j < y; j++){
-			document.write(play_field[i][j] + " ");
-		}
-		document.write("<br>");
-	}
-
-	for (i = 0; i < x; i++){
-		for (j = 0; j < y; j++){
-			document.write(tile[i][j] + " ");
-		}
-		document.write("<br>");
-	}*/
-
-	//setInterval(function(){ updateBoard(board) }, 1000/30); //Updates the heading (Time/Number of mines)
+	
 	updateBoard(board,flip, tile); //Updates the board tiles
 }
 
