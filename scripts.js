@@ -37,7 +37,7 @@ function startGame(){
 	board = canvas.getContext("2d");
 
 	initBoard(play_field, flip, tile); //Initialization of the board
-
+	/*
 	for (i = 0; i < x; i++){
 		for (j = 0; j < y; j++){
 			document.write(play_field[i][j] + " ");
@@ -50,16 +50,59 @@ function startGame(){
 			document.write(tile[i][j] + " ");
 		}
 		document.write("<br>");
-	}
+	}*/
 
 	//setInterval(function(){ updateBoard(board) }, 1000/30); //Updates the heading (Time/Number of mines)
-	setInterval(function(){ updateBoard(board) }, 1000/30); //Updates the board tiles
+	updateBoard(board,flip, tile); //Updates the board tiles
 }
 
-function updateBoard(b){
+function updateBoard(b,status,num){
 	//Draws canvas
 	b.fillStyle="#3D7E85";
 	b.fillRect(0,0,600,80);
+
+	//Draws the tiles
+	for (i = 0; i < x; i ++){
+		for (j = 0; j < y; j++){
+			//Draw the outline of the tiles
+			b.rect(20*i,380-20*j,20,20);
+			b.stroke();
+			//Fill in the tiles
+			if(status[i][j] == NOTFLIPPED){
+				b.fillStyle="#294F83";
+				b.fillRect(20*i,380-20*j,20,20);
+			} else {//Flipped tiles
+				//Tile color of flipped tile
+				b.fillStyle="#28ACC6";
+				b.fillRect(20*i,380-20*j,20,20);
+				//Show number/bomb image
+				if (num[i][j] != -1){ 
+					b.font = "Trebuchet";
+					b.fillStyle="#000";
+					b.fillText(num[i][j],20*i + 7,380-20*j+13,20);
+				} else {
+					b.fillStyle="000";
+					b.arc(20*i + 10, 380-20*j + 10,7,0,2*Math.PI);
+				}
+			}
+		}
+	}
+	//Draw another box for final tile
+	b.rect(580,80,20,20);
+	b.stroke();
+
+	//Box for number of mines
+	b.rect(20,20,40,40);
+	b.stroke();
+	b.fillStyle="#000";
+	b.fillRect(20,20,40,40);
+
+	//Write the number of mines remaining
+	b.font = "bold 20px Trebuchet";
+	b.fillStyle="#FF0000";
+	var str = "" + num_mines_remaining;
+	b.fillText(str,30,45);
+
 }
 
 //Initializes the board to have 99 mines (true), every element is unflipped and assigns a number to each tile
