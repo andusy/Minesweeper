@@ -1,1 +1,1 @@
-Minesweeper HTML JavaScript game
+A simple Minesweeper game created using HTML and JavaScript 
