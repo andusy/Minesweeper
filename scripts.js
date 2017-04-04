@@ -212,7 +212,7 @@ function getPosition(event){
   	for (i = 0; i < x; i++){
   		for (j = 0; j < y; j++){
   			if (xpos > 20*i && xpos < 20*i + 20 && ypos > 380-20*j && ypos < 380-20*j+20){
-  				drawSquare(board,i,j);
+  				checkNum(board,i,j);
   			}
   		}
   	}
@@ -220,6 +220,7 @@ function getPosition(event){
   	//20*i,380-20*j,20,20
 }
 
+//Draws the square onto the board from the position entered
 function drawSquare(b,xpos,ypos){
 	//Draw the outline of the tiles
 	b.rect(20*xpos,380-20*ypos,20,20);
@@ -228,7 +229,7 @@ function drawSquare(b,xpos,ypos){
 	b.fillStyle="#28ACC6";
 	b.fillRect(20*i,380-20*j,20,20);
 	//Show number/bomb image
-	if (tile[xpos][ypos] != -1){ 
+	if (tile[xpos][ypos] != -1 && tile[xpos][ypos] != 0){ //Checks if the tile has mines surrounding
 		b.font = "Trebuchet";
 		b.fillStyle="#000";
 		b.fillText(tile[xpos][ypos],20*xpos + 6,380-20*ypos+15,20);
@@ -243,4 +244,21 @@ function drawSquare(b,xpos,ypos){
 	b.fillStyle="#FF0000";
 	var str = "" + num_mines_remaining;
 	b.fillText(str,30,45);
+}
+
+//Checks the number of the selected tile and performs an action (only called after that tile has been clicked)
+function checkNum(b,xpos,ypos){
+	//Checks if the selected tile is a mine
+	if (tile[xpos][ypos] == 0){//If there is no mine surrounding, continue revealing nearby tiles	
+	} else if (tile[xpos][ypos] != -1){ //Draws normally if the tile is not a mine
+		drawSquare(b,xpos,ypos);
+	} else { //Draws all the mines
+		for (i = 0; i < x; i++){
+  			for (j = 0; j < y; j++){
+	  			if (tile[i][j] == -1){
+	  				drawSquare(b,i,j);
+	  			}
+  			}
+  		}	
+	}
 }
